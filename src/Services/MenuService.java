@@ -9,8 +9,7 @@ public class MenuService {
                 "| 1 - Submenu de pessoas |\n" +
                 "| 2 - Submenu de Vacinas |\n" +
                 "| 3 - Sair               |\n" +
-                "+------------------------+\n" +
-                "\n";
+                "+------------------------+\n";
         return menu;
     }
 
@@ -25,8 +24,7 @@ public class MenuService {
                 "| 4 - Alterar          |\n" +
                 "| 5 - Excluir          |\n" +
                 "| Outro digito - Voltar|\n" +
-                "+----------------------+\n" +
-                "\n";
+                "+----------------------+\n";
         return menu;
     }
 
@@ -41,8 +39,7 @@ public class MenuService {
                 "| 4 - Alterar          |\n" +
                 "| 5 - Excluir          |\n" +
                 "| Outro digito - Voltar|\n" +
-                "+----------------------+\n" +
-                "\n";
+                "+----------------------+\n";
         return menu;
     }
 
@@ -59,8 +56,7 @@ public class MenuService {
                 "| 6 - Emails              |\n" +
                 "| 7 - Vacinas Tomadas     |\n" +
                 "| Outro digito - Confirmar|\n" +
-                "+-------------------------+\n" +
-                "\n";
+                "+-------------------------+\n";
         return menu;
     }
 
@@ -75,8 +71,7 @@ public class MenuService {
                 "| 4 - Idades/Dosagens     |\n" +
                 "| 5 - Duração             |\n" +
                 "| Outro digito - Confirmar|\n" +
-                "+-------------------------+\n" +
-                "\n";
+                "+-------------------------+\n";
         return menu;
     }
 

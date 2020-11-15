@@ -156,6 +156,7 @@ public class Main {
                                         }
                                         System.out.println(menuService.menuEditTelefone());
                                     } else{
+                                        System.out.println(menuService.menuEditPessoa());
                                         finishTel = 1;
                                     }
                                 }
@@ -183,6 +184,7 @@ public class Main {
                                         }
                                         System.out.println(menuService.menuEditEmail());
                                     } else{
+                                        System.out.println(menuService.menuEditPessoa());
                                         finishTel = 1;
                                     }
                                 }
@@ -196,7 +198,7 @@ public class Main {
                                         System.out.println("Digite o codigo da nova vacina");
                                         VacinaDTO vacinaDTO = vacinaService.getVacinaInListByCodigo(vacinaDTOList, input.nextInt());
                                         pessoa.getVacinaDTOs().add(vacinaDTO);
-                                        System.out.println(menuService.menuEditEmail());
+                                        System.out.println(menuService.menuEditVacina());
                                     } else if(opt == 2){
                                         System.out.println("Vacinas disponíveis:");
                                         for (int i = 0; i < pessoa.getTelefones().size(); i++) {
@@ -209,8 +211,9 @@ public class Main {
                                         } else {
                                             System.out.println("Vacina Não encontrada pro valor informado");
                                         }
-                                        System.out.println(menuService.menuEditEmail());
+                                        System.out.println(menuService.menuEditVacina());
                                     } else{
+                                        System.out.println(menuService.menuEditPessoa());
                                         finishTel = 1;
                                     }
                                 }
@@ -257,6 +260,7 @@ public class Main {
                     }
                     List<String> dosagens = new ArrayList<>();
                     System.out.println("Digite (individualmente) as idades/dosagens");
+                    finish = 0;
                     while (finish != 1) {
                         System.out.println("Digite a idade e dosagem recomendada");
                         dosagens.add(input.next());
@@ -352,6 +356,7 @@ public class Main {
                                 vacinaService.vacinaEdit(vacinaDTOList, vacina);
                                 finish = 1;
                             }
+                            System.out.println(menuService.menuEditVacinaDto());
                         }
                     }
                 } else if (input.nextInt()==5){

@@ -31,7 +31,7 @@ public class VacinaDTO {
                 "\nDoencas Protegidas: " + doencasProtegidas +
                 "\nIdades e Dosagens: " + idadesDosagens +
                 "\nTempo de Duracao do Efeito em Anos: " + tempoDuracaoEfeitoEmAnos +
-                '.';
+                ".\n";
     }
 
     public int getCodigo() {

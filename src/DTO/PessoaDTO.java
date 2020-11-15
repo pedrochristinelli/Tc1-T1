@@ -48,7 +48,7 @@ public class PessoaDTO {
                 "\nE-mails: " + emails +
                 "\nTelefones: " + telefones +
                 "\nVacinas Tomadas: " + vacinaDTOs +
-                '.';
+                ".\n";
     }
 
     public String getCpf() {
