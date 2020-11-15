@@ -21,7 +21,7 @@ public class Main {
         pessoaDTO.setDataNascimento(new Date(27,05,1999));
         pessoaDTO.setNome("Carlos José da Silva");
         pessoaDTO.setSalario(1075.00);
-        pessoaDTO.setSexo("Masculijno");
+        pessoaDTO.setSexo("Masculino");
         pessoaDTO.setTelefones(Arrays.asList("carlos.gmail.com", "carlao@gmail.com"));
         pessoaDTO.setEmails(Arrays.asList("(16)98145-1615", "(16)98145-1855"));
         pessoaDTO.setVacinaDTOs(Arrays.asList(vacinaDTO));
