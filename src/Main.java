@@ -142,7 +142,6 @@ public class Main {
                             }
                         }
                     }
-
                 } else if (submenuPessoas == 5){
                     System.out.println("Digite o CPF da pessoa que deseja excluir");
                     System.out.println(pessoaService.pessoaDelete(pessoaDTOList, input.next()));

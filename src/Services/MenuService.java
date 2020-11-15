@@ -63,4 +63,40 @@ public class MenuService {
                 "\n";
         return menu;
     }
+
+    public String menuEditTelefone(){
+        String menu = "\n" +
+                "+---------------------------+\n" +
+                "|         Telefones         |\n" +
+                "+---------------------------+\n" +
+                "| 1 - Adicionar             |\n" +
+                "| 2 - Remover               |\n" +
+                "| Outro digito - Conmfirmar |\n" +
+                "+---------------------------+\n";
+        return menu;
+    }
+
+    public String menuEditVacina(){
+        String menu = "\n" +
+                "+---------------------------+\n" +
+                "|         Vacinas           |\n" +
+                "+---------------------------+\n" +
+                "| 1 - Adicionar             |\n" +
+                "| 2 - Remover               |\n" +
+                "| Outro digito - Conmfirmar |\n" +
+                "+---------------------------+\n";
+        return menu;
+    }
+
+    public String menuEditEmail(){
+        String menu = "\n" +
+                "+---------------------------+\n" +
+                "|         Emails            |\n" +
+                "+---------------------------+\n" +
+                "| 1 - Adicionar             |\n" +
+                "| 2 - Remover               |\n" +
+                "| Outro digito - Conmfirmar |\n" +
+                "+---------------------------+\n";
+        return menu;
+    }
 }
