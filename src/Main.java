@@ -133,12 +133,90 @@ public class Main {
                                 System.out.println("Digite o novo salario da pessoa");
                                 pessoa.setSalario(input.nextDouble());
                             } else if (editIndex == 5) {
-                                System.out.println("Digite o(s) novo(s) telefone(s) da pessoa");
-
+                                System.out.println(menuService.menuEditTelefone());
+                                System.out.println("Digite a opção desejada");
+                                int finishTel = 0;
+                                while (finishTel != 1){
+                                    int opt = input.nextInt();
+                                    if (opt == 1){
+                                        System.out.println("Digite o novo telefone no formato (xx)xxxxx-xxxx");
+                                        pessoa.getTelefones().add(input.next());
+                                        System.out.println(menuService.menuEditTelefone());
+                                    } else if(opt == 2){
+                                        System.out.println("Telefones disponíveis:");
+                                        for (int i = 0; i < pessoa.getTelefones().size(); i++) {
+                                            System.out.println(i + " - " + pessoa.getTelefones().get(i));
+                                        }
+                                        System.out.println("Digite a posição do telefone a ser excluido:");
+                                        int pos = input.nextInt();
+                                        if (pos < pessoa.getTelefones().size()){
+                                            pessoa.getTelefones().remove(pos);
+                                        } else {
+                                            System.out.println("Telefone não encontrado pra posição informada!");
+                                        }
+                                        System.out.println(menuService.menuEditTelefone());
+                                    } else{
+                                        finishTel = 1;
+                                    }
+                                }
                             } else if (editIndex == 6) {
-                                System.out.println("Digite o novo Nome da pessoa");
+                                System.out.println(menuService.menuEditEmail());
+                                System.out.println("Digite a opção desejada");
+                                int finishTel = 0;
+                                while (finishTel != 1){
+                                    int opt = input.nextInt();
+                                    if (opt == 1){
+                                        System.out.println("Digite o novo email");
+                                        pessoa.getEmails().add(input.next());
+                                        System.out.println(menuService.menuEditEmail());
+                                    } else if(opt == 2){
+                                        System.out.println("Emails disponíveis:");
+                                        for (int i = 0; i < pessoa.getTelefones().size(); i++) {
+                                            System.out.println(i + " - " + pessoa.getEmails().get(i));
+                                        }
+                                        System.out.println("Digite a posição do email a ser excluido:");
+                                        int pos = input.nextInt();
+                                        if (pos < pessoa.getEmails().size()){
+                                            pessoa.getEmails().remove(pos);
+                                        } else {
+                                            System.out.println("Email não encontrado pra posição informada!");
+                                        }
+                                        System.out.println(menuService.menuEditEmail());
+                                    } else{
+                                        finishTel = 1;
+                                    }
+                                }
                             } else if (editIndex == 7) {
-                                System.out.println("Digite o novo Nome da pessoa");
+                                System.out.println(menuService.menuVacinas());
+                                System.out.println("Digite a opção desejada");
+                                int finishTel = 0;
+                                while (finishTel != 1){
+                                    int opt = input.nextInt();
+                                    if (opt == 1){
+                                        System.out.println("Digite o codigo da nova vacina");
+                                        VacinaDTO vacinaDTO = vacinaService.getVacinaInListByCodigo(vacinaDTOList, input.nextInt());
+                                        pessoa.getVacinaDTOs().add(vacinaDTO);
+                                        System.out.println(menuService.menuEditEmail());
+                                    } else if(opt == 2){
+                                        System.out.println("Vacinas disponíveis:");
+                                        for (int i = 0; i < pessoa.getTelefones().size(); i++) {
+                                            System.out.println(i + " - Codigo " + pessoa.getVacinaDTOs().get(i).getCodigo());
+                                        }
+                                        System.out.println("Digite a posição da vacina a ser excluida:");
+                                        int posVac = input.nextInt();
+                                        if(posVac < pessoa.getVacinaDTOs().size()){
+                                            pessoa.getVacinaDTOs().remove(posVac);
+                                        } else {
+                                            System.out.println("Vacina Não encontrada pro valor informado");
+                                        }
+                                        System.out.println(menuService.menuEditEmail());
+                                    } else{
+                                        finishTel = 1;
+                                    }
+                                }
+                            } else {
+                                System.out.println(pessoaService.pessoaEdit(pessoaDTOList, pessoa));
+                                finish = 1;
                             }
                         }
                     }
@@ -198,7 +276,84 @@ public class Main {
                     vacinaDTOList.add(vacinaDTO);
                     System.out.println(vacinaDTO.toString());
                 } else if (input.nextInt()==4){
-
+                    System.out.println("Digite o codigo da vacina");
+                    VacinaDTO vacina = vacinaService.getVacinaInListByCodigo(vacinaDTOList, input.nextInt());
+                    if (vacina.getCodigo()== 0){
+                        System.out.println("Vacina não encontrada!");
+                    }else{
+                        System.out.println(menuService.menuEditVacinaDto());
+                        int finish = 0;
+                        while (finish != 1) {
+                            int editIndex = input.nextInt();
+                            if (editIndex == 1){
+                                System.out.println("Digite o novo Nome da vacina");
+                                vacina.setNome(input.next());
+                            } else if (editIndex == 2) {
+                                System.out.println("Digite o novo Preço da vacina");
+                                vacina.setPreco(input.nextDouble());
+                            } else if (editIndex == 3) {
+                                System.out.println(menuService.menuEditVacinaDoencas());
+                                System.out.println("Digite a opção desejada");
+                                int finishTel = 0;
+                                while (finishTel != 1){
+                                    int opt = input.nextInt();
+                                    if (opt == 1){
+                                        System.out.println("Digite a nova doença protegida");
+                                        vacina.getDoencasProtegidas().add(input.next());
+                                        System.out.println(menuService.menuEditEmail());
+                                    } else if(opt == 2){
+                                        System.out.println("Doenças protegidas disponíveis:");
+                                        for (int i = 0; i < vacina.getDoencasProtegidas().size(); i++) {
+                                            System.out.println(i + " - " + vacina.getDoencasProtegidas().get(i));
+                                        }
+                                        System.out.println("Digite a posição da doença a ser excluido:");
+                                        int pos = input.nextInt();
+                                        if (pos < vacina.getDoencasProtegidas().size()){
+                                            vacina.getDoencasProtegidas().remove(pos);
+                                        } else {
+                                            System.out.println("Doença não encontrado pra posição informada!");
+                                        }
+                                        System.out.println(menuService.menuEditVacinaDosagens());
+                                    } else{
+                                        finishTel = 1;
+                                    }
+                                }
+                            }else if (editIndex == 4) {
+                                System.out.println(menuService.menuEditVacinaDosagens());
+                                System.out.println("Digite a opção desejada");
+                                int finishTel = 0;
+                                while (finishTel != 1){
+                                    int opt = input.nextInt();
+                                    if (opt == 1){
+                                        System.out.println("Digite a nova idade e dosagem.");
+                                        vacina.getIdadesDosagens().add(input.next());
+                                        System.out.println(menuService.menuEditEmail());
+                                    } else if(opt == 2){
+                                        System.out.println("Idades e dosagens disponíveis:");
+                                        for (int i = 0; i < vacina.getIdadesDosagens().size(); i++) {
+                                            System.out.println(i + " - " + vacina.getIdadesDosagens().get(i));
+                                        }
+                                        System.out.println("Digite a posição da idade/Dosagem a ser excluido:");
+                                        int pos = input.nextInt();
+                                        if (pos < vacina.getIdadesDosagens().size()){
+                                            vacina.getIdadesDosagens().remove(pos);
+                                        } else {
+                                            System.out.println("Idade e Dosagem não encontrado pra posição informada!");
+                                        }
+                                        System.out.println(menuService.menuEditVacinaDosagens());
+                                    } else{
+                                        finishTel = 1;
+                                    }
+                                }
+                            }else if (editIndex == 5) {
+                                System.out.println("Digite o novo Tempo de duração em anos da vacina");
+                                vacina.setTempoDuracaoEfeitoEmAnos(input.nextFloat());
+                            }else{
+                                vacinaService.vacinaEdit(vacinaDTOList, vacina);
+                                finish = 1;
+                            }
+                        }
+                    }
                 } else if (input.nextInt()==5){
                     System.out.println("Digite o codigo da vacina que quer excluir");
                     System.out.println(vacinaService.vacinaDelete(vacinaDTOList, input.nextInt()));

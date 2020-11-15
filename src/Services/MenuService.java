@@ -64,6 +64,22 @@ public class MenuService {
         return menu;
     }
 
+    public String menuEditVacinaDto(){
+        String menu = "\n" +
+                "+-------------------------+\n" +
+                "| Dados Editaveis         |\n" +
+                "+=========================+\n" +
+                "| 1 - Nome                |\n" +
+                "| 2 - Preço               |\n" +
+                "| 3 - Doenças Protegidas  |\n" +
+                "| 4 - Idades/Dosagens     |\n" +
+                "| 5 - Duração             |\n" +
+                "| Outro digito - Confirmar|\n" +
+                "+-------------------------+\n" +
+                "\n";
+        return menu;
+    }
+
     public String menuEditTelefone(){
         String menu = "\n" +
                 "+---------------------------+\n" +
@@ -92,6 +108,30 @@ public class MenuService {
         String menu = "\n" +
                 "+---------------------------+\n" +
                 "|         Emails            |\n" +
+                "+---------------------------+\n" +
+                "| 1 - Adicionar             |\n" +
+                "| 2 - Remover               |\n" +
+                "| Outro digito - Conmfirmar |\n" +
+                "+---------------------------+\n";
+        return menu;
+    }
+
+    public String menuEditVacinaDoencas(){
+        String menu = "\n" +
+                "+---------------------------+\n" +
+                "|         Doenças           |\n" +
+                "+---------------------------+\n" +
+                "| 1 - Adicionar             |\n" +
+                "| 2 - Remover               |\n" +
+                "| Outro digito - Conmfirmar |\n" +
+                "+---------------------------+\n";
+        return menu;
+    }
+
+    public String menuEditVacinaDosagens(){
+        String menu = "\n" +
+                "+---------------------------+\n" +
+                "|         Dosagens          |\n" +
                 "+---------------------------+\n" +
                 "| 1 - Adicionar             |\n" +
                 "| 2 - Remover               |\n" +
