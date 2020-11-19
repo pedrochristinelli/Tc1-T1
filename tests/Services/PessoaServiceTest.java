@@ -2,6 +2,8 @@ package Services;
 
 import DTO.PessoaDTO;
 import DTO.VacinaDTO;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -14,7 +16,6 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 class PessoaServiceTest {
-
     public List<PessoaDTO> geraListaPessoa(){
         List<PessoaDTO> pessoaDTOList = new ArrayList<>();
 
@@ -49,10 +50,17 @@ class PessoaServiceTest {
         return pessoaDTOList;
     }
 
+    @Order(1)
+    @DisplayName("Teste pessoaCreation - 1")
     @org.junit.jupiter.api.Test
     void pessoaCreation() {
         List<PessoaDTO> pessoaDTOList = geraListaPessoa();
         /*Usuário -- Inicio*/
+        String cpf = "301.785.707-70";
+        String nome = "Carlos Eduardo";
+        Date date = new Date(2000,9,25);
+        String sexo = "M";
+        double salario = 2563;
         List<String> telefone = Collections.singletonList(("1651541111"));
         List<String> email = Collections.singletonList(("calor@eduardo.com"));
         /*Usuário -- Fim*/
@@ -63,72 +71,81 @@ class PessoaServiceTest {
         List<VacinaDTO> vacinaDTOs = Collections.singletonList((vacinaDTO));
         /*Vacina -- Fim*/
 
-        pessoaDTOList.add(new PessoaDTO("301.785.707-70","Carlos Eduardo",new Date(2000,9,25),"M",2563,telefone,email,vacinaDTOs));
-        assertEquals(3, pessoaDTOList.size());
+        PessoaService pessoaService = new PessoaService();
+        PessoaDTO pessoaDTO = pessoaService.pessoaCreation(cpf,nome,date,sexo,salario,telefone,email,vacinaDTOs);
+        assertAll(
+                () -> assertEquals(cpf, pessoaDTO.getCpf()),
+                () -> assertEquals(nome, pessoaDTO.getNome()),
+                () -> assertEquals(date, pessoaDTO.getDataNascimento()),
+                () -> assertEquals(sexo, pessoaDTO.getSexo()),
+                () -> assertEquals(salario, pessoaDTO.getSalario())
+        );
     }
 
+    @Order(2)
+    @DisplayName("Teste pessoaEdit - 1")
     @ParameterizedTest
-    @ValueSource(ints = 1)
+    @ValueSource(ints = {0,1})
     void pessoaEdit(int parametro) {
+        PessoaService pessoaService = new PessoaService();
         List<PessoaDTO> pessoaDTOList = geraListaPessoa();
         PessoaDTO pessoaDTO = pessoaDTOList.get(parametro);
-        pessoaDTO.setCpf("818.353.368-09");
-        assertEquals("818.353.368-09",pessoaDTOList.get(parametro).getCpf());
+        assertEquals("Pessoa Atualizada com Sucesso!",pessoaService.pessoaEdit(pessoaDTOList,pessoaDTO));
     }
 
+    @Order(3)
+    @DisplayName("Teste pessoaDelete - 1")
     @ParameterizedTest
-    @ValueSource(ints = 0)
-    void pessoaDelete(int parametro) {
+    @ValueSource(strings = {"301.785.707-70", "025.856.966-26"})
+    void pessoaDelete(String cpf) {
+        PessoaService pessoaService = new PessoaService();
         List<PessoaDTO> pessoaDTOList = geraListaPessoa();
-        String cpf = pessoaDTOList.get(parametro).getCpf();
-        pessoaDTOList.remove(parametro);
-        int result = 0;
-        for(PessoaDTO pessoa : pessoaDTOList){
-            if(pessoa.getCpf().equals(cpf)){
-                result = 1;
-            }
-        }
-        assertEquals(0, result);
+        assertEquals("Pessoa deletada com Sucesso!", pessoaService.pessoaDelete(pessoaDTOList,cpf));
     }
 
+    @Order(4)
+    @DisplayName("Teste listarTodasPessoas - 1")
     @org.junit.jupiter.api.Test
     void listarTodasPessoas() {
+        PessoaService pessoaService = new PessoaService();
         List<PessoaDTO> pessoaDTOList = geraListaPessoa();
-        System.out.println("Número de pessoas: "+pessoaDTOList.size());
-        int pessoas_listadas = 0;
-        for(PessoaDTO pessoa : pessoaDTOList){
-            pessoas_listadas++;
-            System.out.println(pessoas_listadas +": "+ pessoa.getCpf());
+        String todasPessoas = "";
+        for (PessoaDTO pessoa: pessoaDTOList) {
+            todasPessoas = todasPessoas + pessoa.toString();
         }
-        assertEquals(2, pessoas_listadas);
+        assertEquals(todasPessoas, pessoaService.listarTodasPessoas(pessoaDTOList));
     }
 
+    @Order(5)
+    @DisplayName("Teste listarPessoaPeloCpf - 1")
     @ParameterizedTest
-    @ValueSource(strings = "301.785.707-70")
-    void listarPessoaPeloCpf(String parametro) {
-        List<PessoaDTO> pessoaDTOList = geraListaPessoa();
-        System.out.println("Número de pessoas: 1");
-        int pessoas_listadas = 0;
-        for(PessoaDTO pessoa : pessoaDTOList){
-            if(pessoa.getCpf().equals(parametro)){
-                pessoas_listadas++;
-                System.out.println(pessoas_listadas +": "+ pessoa.getCpf());
-            }
-        }
-        assertEquals(1, pessoas_listadas);
-    }
-
-    @ParameterizedTest
-    @ValueSource(strings = "301.785.707-70")
-    void getPessoaByCpf(String parametro) {
+    @ValueSource(strings = {"301.785.707-70", "025.856.966-26"})
+    void listarPessoaPeloCpf(String cpf) {
+        PessoaService pessoaService = new PessoaService();
         List<PessoaDTO> pessoaDTOList = geraListaPessoa();
         PessoaDTO pessoaDTO = null;
         for(PessoaDTO pessoa : pessoaDTOList){
-            if(pessoa.getCpf().equals(parametro)){
+            if(pessoa.getCpf().equals(cpf)){
                 pessoaDTO = pessoa;
             }
         }
         assert pessoaDTO != null;
-        assertEquals(parametro, pessoaDTO.getCpf());
+        assertEquals(pessoaDTO.toString(), pessoaService.listarPessoaPeloCpf(pessoaDTOList, cpf));
+    }
+
+    @Order(6)
+    @DisplayName("Teste getPessoaByCpf - 1")
+    @ParameterizedTest
+    @ValueSource(strings = {"301.785.707-70", "025.856.966-26"})
+    void getPessoaByCpf(String cpf) {
+        PessoaService pessoaService = new PessoaService();
+        List<PessoaDTO> pessoaDTOList = geraListaPessoa();
+        PessoaDTO pessoaDTO = null;
+        for(PessoaDTO pessoa : pessoaDTOList){
+            if(pessoa.getCpf().equals(cpf)){
+                pessoaDTO = pessoa;
+            }
+        }
+        assertEquals(pessoaDTO, pessoaService.getPessoaByCpf(pessoaDTOList, cpf));
     }
 }
