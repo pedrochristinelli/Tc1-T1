@@ -2,6 +2,8 @@ package Services;
 
 import DTO.PessoaDTO;
 import DTO.VacinaDTO;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -33,79 +35,92 @@ class VacinaServiceTest {
         return vacinaDTOList;
     }
 
+    @Order(1)
+    @DisplayName("Teste vacinaCreation - 1")
     @Test
     void vacinaCreation() {
-        List<VacinaDTO> vacinaDTOList = geraListaVacina();
+        VacinaService vacinaService = new VacinaService();
         List<String> doencasProtegidas = Collections.singletonList(("Tétano"));
         List<String> idadesDosagens = Collections.singletonList(("10"));
-        vacinaDTOList.add(new VacinaDTO(10,"Tetaniaziade",32.5,doencasProtegidas,idadesDosagens,7));
-        assertEquals(3, vacinaDTOList.size());
+        int codigo = 10;
+        String nome = "Tetaniaziade";
+        double price = 32.5;
+        int tempo = 7;
+        VacinaDTO vacinaDTO = vacinaService.vacinaCreation(codigo,nome,price,doencasProtegidas,idadesDosagens,tempo);
+        assertAll(
+                () -> assertEquals(codigo, vacinaDTO.getCodigo()),
+                () -> assertEquals(nome, vacinaDTO.getNome()),
+                () -> assertEquals(price, vacinaDTO.getPreco()),
+                () -> assertEquals(tempo, vacinaDTO.getTempoDuracaoEfeitoEmAnos()),
+                () -> assertEquals(doencasProtegidas, vacinaDTO.getDoencasProtegidas()),
+                () -> assertEquals(idadesDosagens, vacinaDTO.getIdadesDosagens())
+        );
     }
 
+    @Order(2)
+    @DisplayName("Teste vacinaEdit - 1")
     @ParameterizedTest
-    @ValueSource(ints = 0)
+    @ValueSource(ints = {0,1})
     void vacinaEdit(int parametro) {
+        VacinaService vacinaService = new VacinaService();
         List<VacinaDTO> vacinaDTOList = geraListaVacina();
         VacinaDTO vacinaDTO = vacinaDTOList.get(parametro);
-        vacinaDTO.setNome("Vacina Legal");
-        assertEquals("Vacina Legal", vacinaDTO.getNome());
+        assertEquals("Vacina Atualizada com Sucesso!", vacinaService.vacinaEdit(vacinaDTOList,vacinaDTO));
     }
 
+    @Order(3)
+    @DisplayName("Teste vacinaDelete - 1")
     @ParameterizedTest
-    @ValueSource(ints = 1)
-    void vacinaDelete(int parametro) {
+    @ValueSource(ints = {36, 55})
+    void vacinaDelete(int codigo) {
+        VacinaService vacinaService = new VacinaService();
         List<VacinaDTO> vacinaDTOList = geraListaVacina();
-        VacinaDTO vacinaDTO = vacinaDTOList.get(parametro);
-        int codigo = vacinaDTO.getCodigo();
-        vacinaDTOList.remove(parametro);
-        int result = 0;
-        for(VacinaDTO vacinaDTO1 : vacinaDTOList){
-            if(vacinaDTO1.getCodigo() == codigo){
-                result = 1;
-            }
-        }
-        assertEquals(0, result);
+        assertEquals("Vacina deletada com Sucesso!", vacinaService.vacinaDelete(vacinaDTOList,codigo));
     }
 
+    @Order(4)
+    @DisplayName("Teste listarTodasVacinas - 1")
     @Test
     void listarTodasVacinas() {
         List<VacinaDTO> vacinaDTOList = geraListaVacina();
-        System.out.println("Número de vacinas: "+vacinaDTOList.size());
-        int vacinas_listadas = 0;
-        for(VacinaDTO vacinaDTO1 : vacinaDTOList){
-            vacinas_listadas++;
-            System.out.println(vacinas_listadas +": "+ vacinaDTO1.getCodigo());
+        VacinaService vacinaService = new VacinaService();
+        String todasVacinas = "";
+        for (VacinaDTO vacina: vacinaDTOList) {
+            todasVacinas = todasVacinas + vacina.toString();
         }
-        assertEquals(2, vacinas_listadas);
+        assertEquals(todasVacinas, vacinaService.listarTodasVacinas(vacinaDTOList));
     }
 
+    @Order(5)
+    @DisplayName("Teste listarVacinapeloCodigo - 1")
     @ParameterizedTest
-    @ValueSource(ints = 36)
-    void listarVacinapeloCodigo(int parametro) {
+    @ValueSource(ints = {36, 55})
+    void listarVacinapeloCodigo(int codigo) {
+        VacinaService vacinaService = new VacinaService();
         List<VacinaDTO> vacinaDTOList = geraListaVacina();
-        System.out.println("Número de vacinas: 1");
-        int vacinas_listadas = 0;
-        for(VacinaDTO vacinaDTO1 : vacinaDTOList){
-            if(vacinaDTO1.getCodigo() == parametro){
-                vacinas_listadas++;
-                System.out.println(vacinas_listadas +": "+ vacinaDTO1.getCodigo());
+        VacinaDTO vacinaDTO = null;
+        for(VacinaDTO vacina : vacinaDTOList){
+            if(vacina.getCodigo() == codigo){
+                vacinaDTO = vacina;
             }
         }
-        assertEquals(1, vacinas_listadas);
+        assert vacinaDTO != null;
+        assertEquals(vacinaDTO.toString(), vacinaService.listarVacinapeloCodigo(vacinaDTOList, codigo));
     }
 
+    @Order(6)
+    @DisplayName("Teste getVacinaInListByCodigo - 1")
     @ParameterizedTest
-    @ValueSource(ints = 55)
-    void getVacinaInListByCodigo(int parametro) {
+    @ValueSource(ints = {36, 55})
+    void getVacinaInListByCodigo(int codigo) {
+        VacinaService vacinaService = new VacinaService();
         List<VacinaDTO> vacinaDTOList = geraListaVacina();
-        System.out.println("Número de vacinas: 1");
-        VacinaDTO vacina = null;
-        for(VacinaDTO vacinaDTO1 : vacinaDTOList){
-            if(vacinaDTO1.getCodigo() == parametro){
-                vacina = vacinaDTO1;
+        VacinaDTO vacinaDTO = null;
+        for(VacinaDTO vacina : vacinaDTOList){
+            if(vacina.getCodigo() == codigo){
+                vacinaDTO = vacina;
             }
         }
-        assert vacina != null;
-        assertEquals(parametro, vacina.getCodigo());
+        assertEquals(vacinaDTO, vacinaService.getVacinaInListByCodigo(vacinaDTOList, codigo));
     }
 }
